@@ -230,3 +230,66 @@ WHERE salary > (
     FROM Employees
 );
 ```
+
+### 10. Show the average salary for each department
+
+This combines a join with `GROUP BY`. The join lets the result show department names instead of only numeric IDs.
+
+```sql
+SELECT d.department_name, AVG(e.salary) AS average_salary
+FROM Departments AS d
+INNER JOIN Employees AS e
+    ON d.department_id = e.department_id
+GROUP BY d.department_name;
+```
+
+### 11. Show every department and its employee count, including empty departments
+
+`COUNT(e.employee_id)` counts only matching employee rows. Therefore Legal is included with a count of 0. Using `COUNT(*)` here would incorrectly count Legal's outer-join row as one employee.
+
+```sql
+SELECT d.department_name, COUNT(e.employee_id) AS employee_count
+FROM Departments AS d
+LEFT JOIN Employees AS e
+    ON d.department_id = e.department_id
+GROUP BY d.department_name;
+```
+
+### 12. Find departments that have no employees
+
+Start from all departments, use a left join, and keep the rows for which no employee match was found.
+
+```sql
+SELECT d.department_name
+FROM Departments AS d
+LEFT JOIN Employees AS e
+    ON d.department_id = e.department_id
+WHERE e.employee_id IS NULL;
+```
+
+### 13. Find employees paid above their own department's average
+
+This is a correlated subquery: for each employee, the inner query calculates the average salary only for that employee's department.
+
+```sql
+SELECT e.employee_name, e.salary, e.department_id
+FROM Employees AS e
+WHERE e.salary > (
+    SELECT AVG(e2.salary)
+    FROM Employees AS e2
+    WHERE e2.department_id = e.department_id
+);
+```
+
+### 14. Find the second-highest distinct salary
+
+First find the highest salary. Then find the largest salary below it. This returns one salary value and does not need a ranking function.
+
+```sql
+SELECT MAX(salary) AS second_highest_salary
+FROM Employees
+WHERE salary < (
+    SELECT MAX(salary)
+    FROM Employees
+);
+```
