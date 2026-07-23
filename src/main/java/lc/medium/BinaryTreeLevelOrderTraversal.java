@@ -70,4 +70,12 @@ public class BinaryTreeLevelOrderTraversal {
  * The queue-size technique is the standard iterative solution. DFS is also a
  * valid alternative when a helper receives the depth; it has the same O(n) time
  * complexity but uses the tree height on the call stack rather than a queue.
+ *
+ * Follow-ups and edge cases: a null root returns an empty list, a single node
+ * returns one level, and a completely skewed tree produces one node per level,
+ * which stresses the per-level bookkeeping. The same queue skeleton solves a
+ * whole family of variants: zigzag order (LeetCode 103) reverses alternate
+ * levels, bottom-up order (LeetCode 107) reverses the result, the right-side
+ * view (LeetCode 199) keeps the last node of each level, and level averages
+ * (LeetCode 637) reduce each level instead of collecting it.
  */

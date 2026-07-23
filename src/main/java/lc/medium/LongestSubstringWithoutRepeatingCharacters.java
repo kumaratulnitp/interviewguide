@@ -52,4 +52,12 @@ public class LongestSubstringWithoutRepeatingCharacters {
  * A HashSet-based window is another common O(n) approach: repeatedly remove
  * characters from the left until the duplicate disappears. This version stores
  * last-seen indexes, allowing the left boundary to jump directly forward.
+ *
+ * Follow-ups and edge cases: an empty string returns 0, a single character
+ * returns 1, and an all-identical string like "bbbb" returns 1. The input may
+ * contain spaces, digits, or symbols, so avoid assuming a lowercase-only
+ * alphabet. Interviewers often ask to return the substring itself rather than
+ * its length, or to relax the constraint to "at most k distinct characters"
+ * (LeetCode 340) or "at most two distinct characters" (LeetCode 159), all of
+ * which are the same window with a different shrink condition.
  */

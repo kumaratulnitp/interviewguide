@@ -41,6 +41,38 @@ public class CoinChange {
         }
         return minimumCoins[amount] > amount ? -1 : minimumCoins[amount];
     }
+
+    /* ------------------Recursive solution ------------------ */
+    public int coinChangeRecursive(int[] coins, int amount) {
+        if (amount < 0) {
+            return -1;
+        }
+
+        int[] memo = new int[amount + 1];
+        Arrays.fill(memo, Integer.MIN_VALUE);
+        memo[0] = 0;
+        return findMinimumCoins(coins, amount, memo);
+    }
+
+    private int findMinimumCoins(int[] coins, int remainingAmount, int[] memo) {
+        if (remainingAmount < 0) {
+            return -1;
+        }
+        if (memo[remainingAmount] != Integer.MIN_VALUE) {
+            return memo[remainingAmount];
+        }
+
+        int best = Integer.MAX_VALUE;
+        for (int coin : coins) {
+            int subProblem = findMinimumCoins(coins, remainingAmount - coin, memo);
+            if (subProblem >= 0 && subProblem < best) {
+                best = subProblem + 1;
+            }
+        }
+
+        memo[remainingAmount] = best == Integer.MAX_VALUE ? -1 : best;
+        return memo[remainingAmount];
+    }
 }
 
 /*
@@ -54,4 +86,13 @@ public class CoinChange {
  * natural to derive in an interview. Bottom-up DP avoids recursion depth and
  * makes the O(amount) table explicit. A greedy strategy works for some coin
  * systems, but not all: coins [1, 3, 4] and amount 6 need 3 + 3, not 4 + 1 + 1.
+ *
+ * Follow-ups and edge cases: amount 0 needs 0 coins, an unreachable amount
+ * returns -1, and an empty coin array makes every positive amount unreachable.
+ * The amount + 1 sentinel is deliberately larger than any real answer, so it
+ * doubles as "impossible" without risking overflow. Frequent extensions are
+ * counting the number of ways to make the amount instead of the minimum coins
+ * (LeetCode 518), reconstructing which coins were used by storing the chosen
+ * denomination per amount, and the bounded variant where each coin may be used
+ * only a limited number of times.
  */

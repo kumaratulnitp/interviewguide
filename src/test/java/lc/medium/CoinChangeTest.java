@@ -22,4 +22,14 @@ class CoinChangeTest {
     void returnsZeroForZeroAmount() {
         assertEquals(0, solution.coinChange(new int[] {1}, 0));
     }
+
+    @Test
+    void recursiveFindsTheMinimumNumberOfCoins() {
+        assertEquals(3, solution.coinChangeRecursive(new int[] {1, 2, 5}, 11));
+    }
+
+    @Test
+    void recursiveReturnsMinusOneForAnImpossibleAmount() {
+        assertEquals(-1, solution.coinChangeRecursive(new int[] {2}, 3));
+    }
 }

@@ -1,0 +1,30 @@
+      3
+   5     6
+ 2  x.  x.  9
+
+
+
+
+levels   
+  
+
+
+queue
+  3 - 5 6 
+level (this is run only 1 time ie initial size of queue)
+  3 -> added to levels
+
+queue 
+  5 6 - 2 9 
+level (this is run 2 time ie initial size of queue at that time)
+  5 6  -> added to levels 
+
+queue 
+  2 9 - 
+level 
+  2 9 -> added to levels 
+
+even though the items are added to queue, 
+the loop size is predecided to its initial size. 
+that way a level is maintained. 
+

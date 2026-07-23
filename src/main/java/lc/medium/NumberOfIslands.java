@@ -60,4 +60,13 @@ public class NumberOfIslands {
  * find structure is another option, especially when land is added dynamically,
  * but it is more machinery for a one-time static-grid count. An iterative DFS or
  * BFS avoids stack-overflow risk for a very large, connected grid.
+ *
+ * Follow-ups and edge cases: an empty grid returns 0, as does all-water; a
+ * grid that is entirely land is a single island. Because this solution mutates
+ * the input, an interviewer may require preserving it with a separate visited
+ * set. A very large, fully connected grid can overflow the recursion stack, so
+ * an explicit-stack or queue-based traversal is safer. Natural extensions are
+ * the maximum island area (LeetCode 695), counting islands as land is added
+ * dynamically (LeetCode 305, a union-find fit), and treating diagonal cells as
+ * connected, which only changes the neighbor set.
  */

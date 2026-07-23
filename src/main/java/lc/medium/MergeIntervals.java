@@ -16,7 +16,7 @@ import java.util.List;
  * Example:
  * Input: [[1,3],[2,6],[8,10],[15,18]]; Output: [[1,6],[8,10],[15,18]].
  *
- * Algorithm:
+ * Algorithm (sort then merge):
  * 1. Sort intervals by their starting value.
  * 2. Start the merged result with the first interval.
  * 3. For each following interval, compare its start with the end of the last
@@ -32,7 +32,7 @@ public class MergeIntervals {
             return new int[0][0];
         }
 
-        Arrays.sort(intervals, Comparator.comparingInt(interval -> interval[0]));
+        Arrays.sort(intervals, new ByStart());
         List<int[]> merged = new ArrayList<>();
         merged.add(intervals[0]);
 
@@ -47,6 +47,14 @@ public class MergeIntervals {
         }
         return merged.toArray(new int[0][]);
     }
+
+    private static class ByStart implements Comparator<int[]> {
+
+        @Override
+        public int compare(int[] first, int[] second) {
+            return Integer.compare(first[0], second[0]);
+        }
+    }
 }
 
 /*
@@ -60,4 +68,12 @@ public class MergeIntervals {
  * The same sorted sweep can be expressed with a stack or by writing directly to
  * an output array. For streaming intervals that are already sorted, sorting is
  * unnecessary; for arbitrary input, the O(n log n) sort is the main cost.
+ *
+ * Follow-ups and edge cases: handle an empty array and a single interval, and
+ * decide whether touching intervals like [1,4] and [4,5] should merge - this
+ * code merges them because it uses <=. Watch for a fully contained interval,
+ * where the end must not shrink (the Math.max guard). Common extensions are
+ * inserting a new interval into an already-sorted list (LeetCode 57), computing
+ * the intersection of two interval lists, and the meeting-rooms family that
+ * asks for the maximum number of simultaneously overlapping intervals.
  */
